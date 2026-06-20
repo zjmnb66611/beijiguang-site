@@ -3,7 +3,9 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { ArrowRight, CheckCircle2, Eye, EyeOff, KeyRound, LockKeyhole, Mail, ShieldCheck } from "lucide-react";
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
+
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
 function createDemoSession() {
   document.cookie = "bjg_session=demo; Path=/; Max-Age=86400; SameSite=Lax";
@@ -17,6 +19,12 @@ export function LoginView() {
   const [remember, setRemember] = useState(true);
   const [error, setError] = useState("");
   const [submitting, setSubmitting] = useState(false);
+
+  useEffect(() => {
+    if (document.cookie.includes("bjg_session=demo")) {
+      router.replace("/dashboard");
+    }
+  }, [router]);
 
   function enterConsole() {
     createDemoSession();
@@ -38,8 +46,8 @@ export function LoginView() {
   return (
     <main className="auth-page">
       <section className="auth-brand-panel" aria-label="北极光平台介绍">
-        <a className="auth-brand" href="/login">
-          <Image src="/assets/beijiguang-mark.svg" width={46} height={46} alt="北极光" priority />
+        <a className="auth-brand" href={`${basePath}/login`}>
+          <Image src={`${basePath}/assets/beijiguang-mark.svg`} width={46} height={46} alt="北极光" priority />
           <span><strong>北极光</strong><small>API Relay Platform</small></span>
         </a>
         <div className="auth-brand-copy">

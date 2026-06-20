@@ -20,7 +20,9 @@ import {
   ShieldCheck,
   X,
 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
 const navigation = [
   { href: "/dashboard", label: "概览", icon: House },
@@ -39,6 +41,12 @@ export function AppShell({ children }: Readonly<{ children: React.ReactNode }>) 
   const [profileOpen, setProfileOpen] = useState(false);
   const [notificationsOpen, setNotificationsOpen] = useState(false);
 
+  useEffect(() => {
+    if (!document.cookie.includes("bjg_session=demo")) {
+      router.replace("/login");
+    }
+  }, [router]);
+
   function logout() {
     document.cookie = "bjg_session=; Path=/; Max-Age=0; SameSite=Lax";
     router.replace("/login");
@@ -54,7 +62,7 @@ export function AppShell({ children }: Readonly<{ children: React.ReactNode }>) 
       />
       <aside className={sidebarOpen ? "sidebar open" : "sidebar"}>
         <div className="brand-row">
-          <Image src="/assets/beijiguang-mark.svg" width={38} height={38} alt="北极光" priority />
+          <Image src={`${basePath}/assets/beijiguang-mark.svg`} width={38} height={38} alt="北极光" priority />
           <div className="brand-text"><strong>北极光</strong><span>API Relay Platform</span></div>
           <button className="icon-button mobile-only" onClick={() => setSidebarOpen(false)} aria-label="关闭导航"><X size={19} /></button>
         </div>
