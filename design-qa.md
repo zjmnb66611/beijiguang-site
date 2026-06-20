@@ -1,52 +1,60 @@
-# Design QA
+# Design QA: Enterprise Dashboard
 
-- Source visual truth: `C:/Users/ASUS/Desktop/exec-e5a01e94-41c8-4ebf-a624-d8f830436505.png`
-- Implementation screenshot: `C:/Users/ASUS/Documents/Codex/2026-06-19/github/work/beijiguang-site/implementation-desktop.png`
-- Comparison image: `C:/Users/ASUS/Documents/Codex/2026-06-19/github/work/beijiguang-site/design-comparison.png`
-- Viewport: 1536 x 1024 desktop; 390 x 844 mobile responsive check
-- State: public landing page, logged out
+## Comparison Target
 
-**Full-View Comparison Evidence**
+- Source visual truth: `C:\Users\ASUS\Desktop\exec-172e557e-90bd-4fe1-8eaa-ec3cc46a30e8.png`
+- Implementation screenshot: `C:\Users\ASUS\Documents\Codex\2026-06-19\github\work\beijiguang-site\implementation-dashboard-final.png`
+- Side-by-side evidence: `C:\Users\ASUS\Documents\Codex\2026-06-19\github\work\beijiguang-site\design-comparison-dashboard.png`
+- Mobile evidence: `C:\Users\ASUS\Documents\Codex\2026-06-19\github\work\beijiguang-site\implementation-mobile-next.png`
+- Viewport: 1440 x 1024 desktop; 390 x 844 mobile
+- State: Dashboard overview, default workspace, no dialogs open
 
-- The implementation matches the source's centered 1240px content frame, two-column hero, right-side login panel, five-card status row, horizontal pricing shelf, and bottom trust row.
-- The full desktop layout remains visible within the intended first viewport. The document has no horizontal overflow at desktop or mobile widths.
-- Glass opacity, highlight borders, blur, cyan/green controls, dark foreground hierarchy, and purple accents follow the selected visual target.
+## Full-View Comparison
 
-**Focused Region Comparison Evidence**
+The implementation preserves the source hierarchy: fixed left navigation, compact top bar, four KPI panels, request/cost trend, provider cost distribution, recent-request table, plan summary, support links, and system footer. The desktop density and section order match the selected visual target without using the mockup as a background.
 
-- Hero and login: heading wraps on the same two lines, the form uses the same vertical density, and action hierarchy matches the source.
-- Status row: card count, metric hierarchy, icon placement, and footer actions match the source.
-- Pricing shelf: three plans remain one grouped surface with dividers instead of nested cards.
-- Mobile: navigation collapses to an icon control, hero and form become a single column, and controls retain practical tap targets.
+## Focused Comparison
 
-**Findings**
+- Typography: locally bundled Noto Sans SC is visually close to the reference and remains readable at 11-16px UI sizes. Metrics use a consistent tabular numeric treatment.
+- Spacing and layout: the 238px sidebar, 64px header, 20-24px content inset, 8px radii, thin dividers, and compact table rhythm track the reference. No nested-card or overlapping layout was found.
+- Colors and tokens: white and cool-gray surfaces, charcoal text, aurora green actions, blue cost series, and semantic success/error colors map cleanly to the mockup.
+- Image and icon quality: the original brand mark is reused as a real asset. Interface icons use one Lucide family. Charts use Recharts rather than handcrafted SVG or CSS drawings.
+- Copy and content: labels, metrics, providers, API paths, billing values, and status text are coherent and production-oriented.
 
-- No actionable P0, P1, or P2 findings remain.
-- [P3] Background landscape differs slightly from the concept image.
-  - Location: full-page aurora scene.
-  - Evidence: the source has a sharper mountain-and-lake silhouette; the implementation uses a locally bundled aurora photograph with a softer horizon.
-  - Impact: minor art-direction difference only; layout, readability, and depth remain intact.
-  - Follow-up: replace `assets/aurora-night.jpg` with a closer licensed landscape if exact photographic fidelity becomes important.
+## Interaction And Responsive Evidence
 
-**Required Fidelity Surfaces**
+- Recharge modal updates the displayed balance.
+- API Key modal creates a new key and status controls update.
+- Logs search filters the request table.
+- Billing plan confirmation updates balance and shows success feedback.
+- Routing mode, fallback ordering controls, retry/timeout inputs, and save feedback work.
+- Mobile viewport has no page-level horizontal overflow (`clientWidth` and `scrollWidth` both 375px in the captured browser surface); navigation collapses behind a menu button and tables remain locally scrollable.
+- Semantic buttons, links, labels, focus rings, reduced-motion support, and meaningful logo alt text are present.
 
-- Fonts and typography: passed. Apple system stack with Chinese fallbacks, matching hierarchy, weights, line height, and wrapping.
-- Spacing and layout rhythm: passed. Frame, grid, card dimensions, gaps, radii, and first-viewport rhythm match the source.
-- Colors and visual tokens: passed. Dark graphite, cyan, green, blue, amber, coral, glass opacity, and semantic states are consistent.
-- Image quality and asset fidelity: passed with the P3 landscape note above. The background and brand mark are real local assets; icons use the bundled icon library.
-- Copy and content: passed. Product-specific Chinese content is coherent and consistent with the existing site.
-- Interactions and accessibility: passed. Login, menu, password visibility, recharge, key generation, model routing, logs, focus states, reduced motion, and responsive controls work.
+## Findings
 
-**Patches Made Since Previous QA Pass**
+No actionable P0, P1, or P2 findings remain.
 
-- Removed the mobile menu control from desktop navigation.
-- Constrained the main content to 1240px to match the reference composition.
-- Shifted the hero and login panel into the reference alignment.
-- Adjusted aurora color treatment from yellow-green to cyan, teal, and purple.
-- Rechecked desktop and mobile overflow and all primary console actions.
+## Follow-up Polish
 
-**Follow-up Polish**
+- [P3] Provider marks in the recent-request table use text rather than vendor-specific brand artwork. This avoids unlicensed approximations and does not affect comprehension.
+- [P3] The generated reference uses slightly different chart data geometry; the implementation intentionally uses internally consistent mock data while preserving the same scale and visual language.
 
-- Optional P3: source a closer mountain-and-lake aurora photograph.
+## Patches Made
+
+- Removed the extra dashboard page heading to match the source first-screen density.
+- Rebalanced chart/provider columns and enlarged the provider donut.
+- Reduced header and table heights so the footer remains visible at 1440 x 1024.
+- Disabled chart entrance animation to prevent partial captures and layout instability.
+- Replaced generic navigation glyphs with closer Lucide equivalents.
+- Added a bordered support group and verified the responsive sidebar.
+
+## Implementation Checklist
+
+- [x] Desktop layout and hierarchy match the selected visual target.
+- [x] All five requested product areas are implemented as Next.js routes.
+- [x] Core controls and success states are functional.
+- [x] Desktop and mobile layouts were captured and checked.
+- [x] Lint and production build pass.
 
 final result: passed

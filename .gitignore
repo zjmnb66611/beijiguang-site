@@ -1,4 +1,11 @@
 .vercel
+.next
+out
+node_modules
+.npm-cache
+npm-debug.log*
+dev-server.log
+dev-server.err
 design-reference.png
 design-comparison.png
 implementation-desktop.png
