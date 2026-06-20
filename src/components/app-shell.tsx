@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import {
   Bell,
   BookOpen,
@@ -33,10 +33,17 @@ const navigation = [
 
 export function AppShell({ children }: Readonly<{ children: React.ReactNode }>) {
   const pathname = usePathname();
+  const router = useRouter();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [workspaceOpen, setWorkspaceOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
   const [notificationsOpen, setNotificationsOpen] = useState(false);
+
+  function logout() {
+    document.cookie = "bjg_session=; Path=/; Max-Age=0; SameSite=Lax";
+    router.replace("/login");
+    router.refresh();
+  }
 
   return (
     <div className="app-frame">
@@ -94,7 +101,7 @@ export function AppShell({ children }: Readonly<{ children: React.ReactNode }>) 
             </div>
             <div className="popover-anchor">
               <button className="profile-button" type="button" onClick={() => setProfileOpen((value) => !value)} aria-expanded={profileOpen}><span>张</span><b>张伟</b><ChevronDown size={14} /></button>
-              {profileOpen && <div className="popover profile-menu"><div><strong>张伟</strong><span>admin@aurora.cn</span></div><button type="button"><Settings size={16} />账户设置</button><button type="button"><LogOut size={16} />退出登录</button></div>}
+              {profileOpen && <div className="popover profile-menu"><div><strong>张伟</strong><span>admin@aurora.cn</span></div><button type="button"><Settings size={16} />账户设置</button><button type="button" onClick={logout}><LogOut size={16} />退出登录</button></div>}
             </div>
           </div>
         </header>
